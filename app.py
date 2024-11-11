@@ -13,6 +13,10 @@ app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://a50d85_payroll:p3r3nnia
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db.init_app(app)
 
+@app.route('/')
+def index():
+
+    return 'services are Up'
 
 @app.route('/<tiny_url>')
 def redirect_to_url(tiny_url):
@@ -57,4 +61,4 @@ def get_uploaded_files(super_id):
 
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run()
