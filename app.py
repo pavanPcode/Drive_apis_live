@@ -15,6 +15,7 @@ db.init_app(app)
 
 @app.route('/')
 def index():
+    ##
     return 'services are Up'
 
 @app.route('/<tiny_url>')
