@@ -89,7 +89,7 @@ def upload_image(folder_id):
                 'file_id': uploaded_file.get('id'),
                 'file_name': uploaded_file.get('name'),
                 'file_url': file_url,
-                'tiny_url': f'http://127.0.0.1:5000/{tiny_url}'
+                'tiny_url': f'https://googledriveapis.azurewebsites.net/{tiny_url}'
             }
         }), 200 if db_response['status'] else 500
 

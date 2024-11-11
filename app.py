@@ -45,7 +45,7 @@ def get_uploaded_files(super_id):
                 'file_id': file.file_id,
                 'file_name': file.file_name,
                 'original_url': file.original_url,
-                'tiny_url': f'http://127.0.0.1:5000/{file.tiny_url}',
+                'tiny_url': f'https://googledriveapis.azurewebsites.net/{file.tiny_url}',
                 'created_at': file.created_at.isoformat(),
                 'description':file.description
             }
