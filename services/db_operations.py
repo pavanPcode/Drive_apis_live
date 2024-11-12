@@ -70,3 +70,23 @@ def save_file_data(file_id, file_name, original_url, tiny_url,super_id,descripti
         if connection.is_connected():
             cursor.close()
             connection.close()
+
+
+def get_original_url(tiny_url):
+    try:
+        connection = mysql.connector.connect(**dbinfo)
+        cursor = connection.cursor(dictionary=True)
+
+        query = "SELECT original_url FROM drive_uploaded_files WHERE tiny_url = %s"
+        cursor.execute(query, (tiny_url,))
+
+        result = cursor.fetchone()
+        connection.close()
+        if result:
+            return result['original_url']
+        else:
+            False
+
+    except Error as e:
+        print(e)
+        return False
