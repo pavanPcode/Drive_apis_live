@@ -70,4 +70,4 @@ def get_uploaded_files(super_id):
 
 ##
 if __name__ == '__main__':
-    app.run()
+    app.run(host='0.0.0.0',port=9999)

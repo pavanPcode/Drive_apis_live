@@ -75,7 +75,8 @@ def upload_image(folder_id):
         ).execute()
 
         # Construct a public URL for the uploaded file
-        file_url = f"https://lh3.googleusercontent.com/d/{uploaded_file.get('id')}=w1000?authuser=0"
+        #file_url = f"https://lh3.googleusercontent.com/d/{uploaded_file.get('id')}=w1000?authuser=0"
+        file_url = f"https://drive.google.com/thumbnail?id={uploaded_file.get('id')}&sz=s4000"
         tiny_url = generate_short_code()
 
         # Save file info to the database
