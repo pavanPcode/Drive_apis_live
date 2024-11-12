@@ -1,4 +1,4 @@
-from flask import Flask, Response, stream_with_context,redirect,jsonify
+from flask import Flask, Response, stream_with_context,redirect,jsonify,abort
 from services import folders,drive_api
 app = Flask(__name__)
 
@@ -11,6 +11,14 @@ from services.models import URL, db ,UploadedFile
 
 app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://a50d85_payroll:p3r3nnial@MYSQL5048.site4now.net/db_a50d85_payroll'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+app.config['SQLALCHEMY_ENGINE_OPTIONS'] = {
+    'pool_pre_ping': True,
+    'pool_recycle': 1800  # Adjust based on server timeout settings
+}
+
+
+# app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://a50d85_payroll:p3r3nnial@MYSQL5048.site4now.net/db_a50d85_payroll'
+# app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db.init_app(app)
 
 @app.route('/')
@@ -18,10 +26,20 @@ def index():
     ##
     return 'services are Up'
 
+# @app.route('/<tiny_url>')
+# def redirect_to_url(tiny_url):
+#     url = URL.query.filter_by(tiny_url=tiny_url).first_or_404()
+#     return redirect(url.original_url)
+
+
 @app.route('/<tiny_url>')
 def redirect_to_url(tiny_url):
-    url = URL.query.filter_by(tiny_url=tiny_url).first_or_404()
-    return redirect(url.original_url)
+    url = URL.query.filter_by(tiny_url=tiny_url).first()
+    if url:
+        return redirect(url.original_url)
+    else:
+        abort(404, description="URL not found")
+
 
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
@@ -61,4 +79,4 @@ def get_uploaded_files(super_id):
 
 
 if __name__ == '__main__':
-    app.run()
+    app.run(host='0.0.0.0')
